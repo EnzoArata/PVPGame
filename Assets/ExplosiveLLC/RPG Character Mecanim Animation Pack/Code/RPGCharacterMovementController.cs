@@ -109,6 +109,11 @@ namespace RPGCharacterAnims
         /// Speed of rotation when turning the character to face movement direction or target.
         /// </summary>
         public float rotationSpeed = 100f;
+        
+        /// <summary>
+        /// Speed of rotation when turning the character to face movement direction or target.
+        /// </summary>
+        public float cameraRotationSpeed = 10f;
 
         /// <summary>
         /// Determine is the character is sprinting or not.
@@ -289,7 +294,7 @@ namespace RPGCharacterAnims
 			{ RotateTowardsTarget(rpgCharacterController.aimInput); }
 
 			// Facing.
-			else if (rpgCharacterController.isFacing) { RotateTowardsDirection(rpgCharacterController.faceInput); }
+			else if (rpgCharacterController.isFacing) { RotateTowardsDirection(rpgCharacterController.faceInput * cameraRotationSpeed); }
 			else if (rpgCharacterController.canMove) { RotateTowardsMovementDir(); }
 
             if (currentState == null && rpgCharacterController.CanStartAction(HandlerTypes.Idle))
@@ -675,7 +680,7 @@ namespace RPGCharacterAnims
         private void RotateTowardsMovementDir()
         {
             var movementVector = new Vector3(currentVelocity.x, 0, currentVelocity.z);
-            if (movementVector.magnitude > 0.01f) {
+            if (movementVector.magnitude > 0.1f) {
                 transform.rotation = Quaternion.Slerp(transform.rotation,
 					Quaternion.LookRotation(movementVector),
 					Time.deltaTime * rotationSpeed);
@@ -697,7 +702,7 @@ namespace RPGCharacterAnims
 			if (debugMessages) { Debug.Log($"RotateTowardsDirection: {direction}"); }
 			var lookDirection = new Vector3(direction.x, 0, -direction.y);
 			var lookRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
-			transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+			transform.rotation = Quaternion.Lerp(transform.rotation , lookRotation, Time.deltaTime );
 		}
 
 		/// <summary>

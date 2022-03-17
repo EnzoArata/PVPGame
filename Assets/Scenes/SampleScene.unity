@@ -272,6 +272,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6696524308761318464, guid: 7f40186a37739194690a7defee8c54e7, type: 3}
+      propertyPath: cameraRotationSpeed
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6735244788033080408, guid: 7f40186a37739194690a7defee8c54e7, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -375,7 +379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
