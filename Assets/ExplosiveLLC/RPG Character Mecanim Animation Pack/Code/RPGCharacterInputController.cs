@@ -108,7 +108,7 @@ namespace RPGCharacterAnims
 		        inputFace = Input.GetMouseButton(1);
 		        inputFacingHorizontal = Input.GetAxisRaw("FacingHorizontal");
 		        inputFacingVertical = Input.GetAxisRaw("FacingVertical");
-		        inputRoll = Input.GetButtonDown("L3");
+		        inputRoll = Input.GetButtonDown("Roll");
 		        inputShield = Input.GetButtonDown("Shield");
 		        inputRelax = Input.GetButtonDown("Relax");
 
@@ -188,10 +188,10 @@ namespace RPGCharacterAnims
 		public void Rolling()
         {
             if (!inputRoll ||
-                !rpgCharacterController.HandlerExists(HandlerTypes.DiveRoll) ||
-                !rpgCharacterController.CanStartAction(HandlerTypes.DiveRoll)) { return; }
+                !rpgCharacterController.HandlerExists(HandlerTypes.Roll) ||
+                !rpgCharacterController.CanStartAction(HandlerTypes.Roll)) { return; }
 
-			rpgCharacterController.StartAction(HandlerTypes.DiveRoll, 1);
+			rpgCharacterController.StartAction(HandlerTypes.Roll, 1);
         }
 
         private void Aiming()

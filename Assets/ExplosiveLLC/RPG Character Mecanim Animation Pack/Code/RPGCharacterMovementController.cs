@@ -121,6 +121,12 @@ namespace RPGCharacterAnims
         private bool isSprinting;
 
         /// <summary>
+        /// Determine is the character locked on.
+        /// </summary>
+        public bool targetLock = false;
+
+
+        /// <summary>
         /// Internal flag for when the character can jump.
         /// </summary>
         [HideInInspector] public bool canJump;
@@ -294,7 +300,7 @@ namespace RPGCharacterAnims
 			{ RotateTowardsTarget(rpgCharacterController.aimInput); }
 
 			// Facing.
-			else if (rpgCharacterController.isFacing) { RotateTowardsDirection(rpgCharacterController.faceInput * cameraRotationSpeed); }
+			else if (rpgCharacterController.isFacing) { RotateTowardsDirection(rpgCharacterController.faceInput); }
 			else if (rpgCharacterController.canMove) { RotateTowardsMovementDir(); }
 
             if (currentState == null && rpgCharacterController.CanStartAction(HandlerTypes.Idle))
@@ -680,10 +686,23 @@ namespace RPGCharacterAnims
         private void RotateTowardsMovementDir()
         {
             var movementVector = new Vector3(currentVelocity.x, 0, currentVelocity.z);
-            if (movementVector.magnitude > 0.1f) {
-                transform.rotation = Quaternion.Slerp(transform.rotation,
-					Quaternion.LookRotation(movementVector),
-					Time.deltaTime * rotationSpeed);
+            if (targetLock)
+            {
+	            if (movementVector.magnitude > 0.1f ) {
+		            Vector3 lookRotation = new Vector3(rpgCharacterController.target.position.x,0,rpgCharacterController.target.position.z) 
+		                                   - new Vector3(this.transform.position.x,0,this.transform.position.z);
+	                transform.rotation = Quaternion.Slerp(transform.rotation,
+						Quaternion.LookRotation(lookRotation),
+						Time.deltaTime * rotationSpeed);
+	            }
+            }
+            else
+            {
+	            if (movementVector.magnitude > 0.1f ) {
+		            transform.rotation = Quaternion.Slerp(transform.rotation,
+			            Quaternion.LookRotation(this.transform.forward),
+			            Time.deltaTime * rotationSpeed);
+	            }
             }
         }
 
